@@ -1,43 +1,52 @@
 import React from 'react'
-import { StyleSheet, Text } from 'react-native'
-import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
-import { colors } from '../../../utils/colors';
+import { View, Text, Image } from 'react-native';
+import { SvgXml } from 'react-native-svg'
+import star from '../../../../assets/star';
+import openIcon from '../../../../assets/openIcon'
+import { Card, Title } from 'react-native-paper';
 
 export const RestarauntInfo = ({ restaraunt = {} }) => {
     
     const {
         name = "Buddy V's", 
-        icon,
+        icon = "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
         photos = [
-            "https://www.foodiesfeed.com/wp-content/uploads/2019/06/top-view-for-box-of-2-burgers-home-made-600x899.jpg",
+            "https://www.venetianlasvegas.com/content/dam/venetian/restaurants/buddy-v/thumb-1_1200x800.jpg",
         ],
         address = "100 random street",
         isOpen = true,
         rating = 4,
-        isClosed
-    } = restaraunt
+        isClosedTemporarily = true,
+    } = restaraunt;
+
+    const ratingArray = Array.from(new Array(Math.floor(rating)));
 
     return(
-        <Card style={styles.card}>
-            <Card.Cover source={photos[0]} style={styles.cardCover} />
-            <Card.Content style={styles.cardContent}>
-                <Title>{name}</Title>
+        <Card className="bg-white rounded-[12px] my-3" elevation={5}>
+            <Card.Cover className="bg-white object-contain p-3" source={{uri: photos[0]}}/>
+            <Card.Content className="p-5">
+                <View className="">
+                    <Title className="font-heading text-title">{name}</Title>
+                    <View className="flex-row justify-between">
+                        <View className="flex-row pt-1">
+                            {ratingArray.map(() => (
+                                <SvgXml xml={star} width={20} height={20} key={name}/>
+                            ))}
+                        </View>
+                        <View className="flex-row">
+                            {isClosedTemporarily && 
+                                <Text className="font-body text-red-700 mr-3">CLOSED TEMPORARILY</Text>
+                            }
+                            {isOpen &&
+                                <SvgXml xml={openIcon} width={20} height={20}/>
+                            }
+                            <Image className="ml-3" style={{ width: 15, height: 15 }} source={{ uri:icon }} />
+                        </View>
+                    </View>
+                    <Text className="font-body text-caption pt-1">{address}</Text>
+
+                </View>
             </Card.Content>
         </Card>
     )
 }
-
-const styles = StyleSheet.create({
-    card: {
-        backgroundColor: colors.white,
-        borderRadius: 5,
-    },
-    cardContent: {
-        padding: 10,
-    },
-    cardCover: {
-        backgroundColor: colors.white,
-        borderRadius: 10,
-        padding: 10,
-    }
-})

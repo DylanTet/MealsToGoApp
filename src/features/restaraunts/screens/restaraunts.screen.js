@@ -1,34 +1,30 @@
 import React from 'react'
-import { SafeAreaView, StatusBar, View, StyleSheet } from 'react-native'
+import { SafeAreaView, StatusBar, View, FlatList } from 'react-native'
 import { Searchbar } from 'react-native-paper'
 import { RestarauntInfo } from '../components/restaraunt-info.components'
-import { colors } from '../../../utils/colors'
 
 export const RestaurantsScreen = () => (
     
-    <SafeAreaView style={styles.container}>
-        <View style={styles.search}>
+    <SafeAreaView className="flex-1" style={{marginTop: StatusBar.currentHeight}}>
+        <View className="bg-white p-2">
             <Searchbar placeholder='Search' placeholderTextColor="gray" />
         </View>
-        <View style={styles.list}>
-            <RestarauntInfo />
-        </View>
+        <FlatList 
+            data={[
+                {name: 1},
+                {name: 2},
+                {name: 3},
+                {name: 4},
+                {name: 5},
+                {name: 6},
+                {name: 7},
+                {name: 8},
+                {name: 9},
+                {name: 10},
+                {name: 11}
+            ]}
+            renderItem = {() => <RestarauntInfo />}
+            keyExtractor = {(item) => item.name}
+        />
     </SafeAreaView>
 )
-
-
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      marginTop: StatusBar.currentHeight
-    },
-    list: {
-      backgroundColor: colors.blue,
-      flex: 1,
-      padding: 16,
-    },
-    search: {
-      backgroundColor: colors.white,
-      padding: 15,
-    }
-});
