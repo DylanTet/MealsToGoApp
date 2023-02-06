@@ -11,7 +11,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 function SettingsScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View className="flex-1 justify-center mx-auto">
       <Text>Settings!</Text>
     </View>
   );
@@ -19,10 +19,28 @@ function SettingsScreen() {
 
 function MapScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View className="flex-1 justify-center align-middle">
       <Text>Map!</Text>
     </View>
   );
+}
+
+const createScreenOptions = ({ route }) => {
+  const iconName = TAB_ICON[route.name]
+
+  return {
+    tabBarIcon: ({ size, color }) => (
+      <Ionicons name={iconName} size={size} color={color}/>
+    ),
+    tabBarActiveTintColor: "tomato",
+    tabBarInactiveTintColor: "gray",
+  }
+}
+
+const TAB_ICON = {
+  Restaurants: "md-restaurant",
+  Settings: 'md-settings',
+  Map: "md-map"
 }
 
 const Tab = createBottomTabNavigator()
@@ -45,23 +63,7 @@ export default function App() {
     <NavigationContainer>
       <ThemeProvider theme={theme}>
         <Tab.Navigator
-          screenOptions={({ route }) => ({
-            tabBarIcon: ({ size, color }) => {
-              let iconName;
-
-              if (route.name === 'Restaurants') {
-                iconName = "md-restaurant";
-              } else if (route.name === 'Settings') {
-                iconName = "md-settings";
-              } else if (route.name === 'Map') {
-                iconName = "md-map";
-              }
-
-              return <Ionicons name={iconName} size={size} color={color} />
-            },
-            tabBarActiveTintColor: "tomato",
-            tabBarInactiveTintColor: "gray",
-          })}
+          screenOptions={createScreenOptions}
         >
           <Tab.Screen options={{ headerShown: false }} name='Restaurants' component={RestaurantsScreen} />
           <Tab.Screen name='Map' component={MapScreen} />
