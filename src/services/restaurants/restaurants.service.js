@@ -13,6 +13,13 @@ export const restaurantsRequest = (location = "37.7749295, -122.4194155") => {
     })
 }
 
-restaurantsRequest().then((result) => {
-    console.log(result);
-}).catch(err => console.log(err))
+const transformData = results => {
+    return camelize(results)
+}
+
+restaurantsRequest()
+    .then(transformData)
+    .then(transformedResults => {
+        console.log(transformedResults);
+        
+    }).catch(err => console.log(err))
