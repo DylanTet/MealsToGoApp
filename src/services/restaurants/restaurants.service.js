@@ -9,17 +9,16 @@ export const restaurantsRequest = (location = "37.7749295, -122.4194155") => {
             reject('No location found')
         }
 
-        resolve(camelize(mock))
-    })
-}
+        resolve(mock)
+    });
+};
 
-const transformData = results => {
+const dataTransformed = (results) => {
     return camelize(results)
-}
+};
 
 restaurantsRequest()
-    .then(transformData)
-    .then(transformedResults => {
-        console.log(transformedResults);
-        
-    }).catch(err => console.log(err))
+    .then(dataTransformed)
+    .then(dataTransformed => {
+    console.log(dataTransformed);
+}).catch(err => console.log(err))
