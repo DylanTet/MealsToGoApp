@@ -8,6 +8,7 @@ import { useFonts as useOswald, Oswald_400Regular } from '@expo-google-fonts/osw
 import { useFonts as useLato, Lato_400Regular } from '@expo-google-fonts/lato'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { RestaurantContextProvider } from './src/services/restaurants/restaurants.context';
 
 function SettingsScreen() {
   return (
@@ -60,17 +61,19 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <ThemeProvider theme={theme}>
-        <Tab.Navigator
-          screenOptions={createScreenOptions}
-        >
-          <Tab.Screen options={{ headerShown: false }} name='Restaurants' component={RestaurantsScreen} />
-          <Tab.Screen name='Map' component={MapScreen} />
-          <Tab.Screen name='Settings' component={SettingsScreen} />
-        </Tab.Navigator>
-      </ThemeProvider>
-    </NavigationContainer>
+    <ThemeProvider theme={theme}>
+      <RestaurantContextProvider>
+        <NavigationContainer>
+          <Tab.Navigator
+            screenOptions={createScreenOptions}
+          >
+            <Tab.Screen options={{ headerShown: false }} name='Restaurants' component={RestaurantsScreen} />
+            <Tab.Screen name='Map' component={MapScreen} />
+            <Tab.Screen name='Settings' component={SettingsScreen} />
+          </Tab.Navigator>
+        </NavigationContainer>
+      </RestaurantContextProvider>
+    </ThemeProvider>
   );
 }
 
